@@ -1,11 +1,22 @@
 #!/usr/bin/env cwl-runner
+#
+# Sample workflow
+# Inputs:
+#   submissionId: ID of the Synapse submission to process
+#   adminUploadSynId: ID of a folder accessible only to the submission queue administrator
+#   submitterUploadSynId: ID of a folder accessible to the submitter
+#
 cwlVersion: v1.0
 class: Workflow
 
 # the sole input for any Synapse-centric workflow is the submission id
 inputs:
   - id: submissionId
-    type: string  
+    type: string
+  - id: adminUploadSynId
+    type: string
+  - id: submitterUploadSynId
+    type: string
 
 # there are no output at the workflow engine level.  Everything is uploaded to Synapse
 outputs: []
@@ -44,7 +55,7 @@ steps:
       - id: infile
         source: "#coreWorkflow/stdout"
       - id: parentId
-        valueFrom: syn12270235
+        source: "#submitterUploadSynId"
       - id: usedEntity
         source: "#downloadSubmission/entity"
       - id: executedUrl
