@@ -37,7 +37,7 @@ requirements:
           sub = syn.getSubmission(args.submissionId, downloadLocation=".")
           if sub.entity.entityType!='org.sagebionetworks.repo.model.FileEntity':
             raise Exception('Expected FileEntity type but found '+sub.entity.entityType)
-          os.rename(sub.filePath, args.submissionId)
+          os.rename(sub.filePath, "submission-"+args.submissionId)
           result = {'entityId':sub.entity.id,'entityVersion':sub.entity.versionNumber}
           with open(args.results, 'w') as o:
             o.write(json.dumps(result))
@@ -46,7 +46,7 @@ outputs:
   - id: filePath
     type: File
     outputBinding:
-      glob: $(inputs.submissionId)
+      glob: $("submission-"+inputs.submissionId)
   - id: entity
     type:
       type: record
