@@ -12,7 +12,7 @@ class: Workflow
 # the sole input for any Synapse-centric workflow is the submission id
 inputs:
   - id: submissionId
-    type: string
+    type: int
   - id: adminUploadSynId
     type: string
   - id: submitterUploadSynId

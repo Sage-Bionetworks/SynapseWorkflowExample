@@ -9,7 +9,7 @@ baseCommand: python
 
 inputs:
   - id: submissionId
-    type: string
+    type: int
   - id: annotationName
     type: string
   - id: annotationValue

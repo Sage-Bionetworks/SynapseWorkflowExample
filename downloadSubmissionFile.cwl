@@ -8,7 +8,7 @@ baseCommand: python
 
 inputs:
   - id: submissionId
-    type: string
+    type: int
 
 arguments:
   - valueFrom: downloadSubmissionFile.py
