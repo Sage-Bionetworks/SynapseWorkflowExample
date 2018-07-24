@@ -21,7 +21,7 @@ inputs:
         type: string
       - name: version
         type: int
-  - id: executedUrl
+  - id: executedEntity
     type: string
 
 arguments:
@@ -34,7 +34,7 @@ arguments:
     prefix: -ui
   - valueFrom: $(inputs.usedEntity.version)
     prefix: -uv
-  - valueFrom: $(inputs.executedUrl)
+  - valueFrom: $(inputs.executedEntity)
     prefix: -e
   - valueFrom: results.json
     prefix: -r
@@ -55,13 +55,13 @@ requirements:
             parser.add_argument("-p", "--parentId", required=True, help="Synapse parent for file")
             parser.add_argument("-ui", "--usedEntityId", required=False, help="id of entity 'used' as input")
             parser.add_argument("-uv", "--usedEntityVersion", required=False, help="version of entity 'used' as input")
-            parser.add_argument("-e", "--executedUrl", required=False, help="url of workflow which was executed")
+            parser.add_argument("-e", "--executedEntity", required=False, help="Syn ID of workflow which was executed")
             parser.add_argument("-r", "--results", required=True, help="Results of file upload")
             args = parser.parse_args()
             syn = synapseclient.Synapse(configPath="/root/.synapseConfig")
             syn.login()
             file=synapseclient.File(path=args.infile, parent=args.parentId)
-            file = syn.store(file, used={'reference':{'targetId':args.usedEntityId, 'targetVersionNumber':args.usedEntityVersion}}, executed=args.executedUrl)
+            file = syn.store(file, used={'reference':{'targetId':args.usedEntityId, 'targetVersionNumber':args.usedEntityVersion}}, executed=args.executedEntity)
             results = {'uploadedFileId':file.id,'uploadedFileVersion':file.versionNumber}
             with open(args.results, 'w') as o:
               o.write(json.dumps(results))

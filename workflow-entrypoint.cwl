@@ -17,6 +17,8 @@ inputs:
     type: string
   - id: submitterUploadSynId
     type: string
+  - id: workflowSynapseId
+    type: string
 
 # there are no output at the workflow engine level.  Everything is uploaded to Synapse
 outputs: []
@@ -58,8 +60,8 @@ steps:
         source: "#submitterUploadSynId"
       - id: usedEntity
         source: "#downloadSubmission/entity"
-      - id: executedUrl
-        valueFrom: "https://github.com/Sage-Bionetworks/SynapseWorkflowHook.git"
+      - id: executedEntity
+        valueFrom: "#workflowSynapseId"
     out:
       - id: uploadedFileId
       - id: uploadedFileVersion
