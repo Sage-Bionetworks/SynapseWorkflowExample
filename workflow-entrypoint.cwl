@@ -61,7 +61,7 @@ steps:
       - id: usedEntity
         source: "#downloadSubmission/entity"
       - id: executedEntity
-        valueFrom: "#workflowSynapseId"
+        source: "#workflowSynapseId"
     out:
       - id: uploadedFileId
       - id: uploadedFileVersion
