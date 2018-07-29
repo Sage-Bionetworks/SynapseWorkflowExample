@@ -21,6 +21,7 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
+      - .synapseConfig
       - entryname: downloadSubmissionFile.py
         entry: |
           #!/usr/bin/env python
