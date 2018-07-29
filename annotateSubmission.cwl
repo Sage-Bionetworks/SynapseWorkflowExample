@@ -36,7 +36,6 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-      - entryname: .synapseConfig
       - entryname: annotationSubmission.py
         entry: |
           #!/usr/bin/env python

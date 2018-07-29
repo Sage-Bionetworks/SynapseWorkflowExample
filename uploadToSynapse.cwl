@@ -47,7 +47,6 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-      - entryname: .synapseConfig
       - entryname: uploadFile.py
         entry: |
           #!/usr/bin/env python
