@@ -64,6 +64,8 @@ steps:
         source: "#downloadSubmission/entity"
       - id: executedEntity
         source: "#workflowSynapseId"
+      - id: synapseConfig
+        source: "#synapseConfig"
     out:
       - id: uploadedFileId
       - id: uploadedFileVersion
@@ -79,5 +81,7 @@ steps:
         source: "#uploadResults/uploadedFileId"
       - id: private
         valueFrom: "false"
+      - id: synapseConfig
+        source: "#synapseConfig"
     out: []
  
