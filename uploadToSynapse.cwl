@@ -23,6 +23,8 @@ inputs:
         type: int
   - id: executedEntity
     type: string
+  - id: synapseConfig
+    type: File
 
 arguments:
   - valueFrom: uploadFile.py
@@ -38,12 +40,14 @@ arguments:
     prefix: -e
   - valueFrom: results.json
     prefix: -r
+  - valueFrom: $(inputs.synapseConfig)
+    prefix: -c
 
 requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-      - .synapseConfig
+      - entryname: .synapseConfig
       - entryname: uploadFile.py
         entry: |
           #!/usr/bin/env python
@@ -58,8 +62,9 @@ requirements:
             parser.add_argument("-uv", "--usedEntityVersion", required=False, help="version of entity 'used' as input")
             parser.add_argument("-e", "--executedEntity", required=False, help="Syn ID of workflow which was executed")
             parser.add_argument("-r", "--results", required=True, help="Results of file upload")
+         	parser.add_argument("-c", "--synapseConfig", required=True, help="credentials fle")
             args = parser.parse_args()
-            syn = synapseclient.Synapse(configPath=".synapseConfig")
+            syn = synapseclient.Synapse(configPath=args.synapseConfig)
             syn.login()
             file=synapseclient.File(path=args.infile, parent=args.parentId)
             file = syn.store(file, used={'reference':{'targetId':args.usedEntityId, 'targetVersionNumber':args.usedEntityVersion}}, executed=args.executedEntity)

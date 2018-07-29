@@ -16,6 +16,8 @@ inputs:
     type: string
   - id: private
     type: string?
+  - id: synapseConfig
+    type: File
 
 arguments:
   - valueFrom: annotationSubmission.py
@@ -27,12 +29,14 @@ arguments:
     prefix: -v
   - valueFrom: $(inputs.private)
     prefix: -p
+  - valueFrom: $(inputs.synapseConfig)
+    prefix: -c
 
 requirements:
   - class: InlineJavascriptRequirement
   - class: InitialWorkDirRequirement
     listing:
-      - .synapseConfig
+      - entryname: .synapseConfig
       - entryname: annotationSubmission.py
         entry: |
           #!/usr/bin/env python
@@ -45,8 +49,9 @@ requirements:
             parser.add_argument("-n", "--annotationName", required=True, help="Name of annotation to add")
             parser.add_argument("-v", "--annotationValue", required=True, help="Value of annotation")
             parser.add_argument("-p", "--private", required=False, help="Annotation is private to queue administrator(s)")
+         	parser.add_argument("-c", "--synapseConfig", required=True, help="credentials fle")
             args = parser.parse_args()
-            syn = synapseclient.Synapse(configPath=".synapseConfig")
+            syn = synapseclient.Synapse(configPath=args.synapseConfig)
             syn.login()
             status = syn.getSubmissionStatus(args.submissionId)
             annot = {'isPrivate': args.private, 'key': args.annotationName, 'value': args.annotationValue}

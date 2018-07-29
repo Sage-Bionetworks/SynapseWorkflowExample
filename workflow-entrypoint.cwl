@@ -10,7 +10,6 @@
 cwlVersion: v1.0
 class: Workflow
 
-# the sole input for any Synapse-centric workflow is the submission id
 inputs:
   - id: submissionId
     type: int
@@ -20,6 +19,8 @@ inputs:
     type: string
   - id: workflowSynapseId
     type: string
+  - id: synapseConfig
+    type: File
 
 # there are no output at the workflow engine level.  Everything is uploaded to Synapse
 outputs: []
@@ -30,8 +31,8 @@ steps:
     in:
       - id: submissionId
         source: "#submissionId"
-      - id: downloadLocation
-        valueFrom: .
+      - id: synapseConfig
+        source: "#synapseConfig"
     out:
       - id: filePath
       - id: entity
