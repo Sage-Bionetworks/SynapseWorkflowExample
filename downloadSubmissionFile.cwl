@@ -18,7 +18,7 @@ arguments:
     prefix: -s
   - valueFrom: results.json
     prefix: -r
-  - valueFrom: $(inputs.synapseConfig)
+  - valueFrom: $(inputs.synapseConfig.path)
     prefix: -c
 
 requirements:
@@ -35,7 +35,7 @@ requirements:
           parser = argparse.ArgumentParser()
           parser.add_argument("-s", "--submissionId", required=True, help="Submission ID")
           parser.add_argument("-r", "--results", required=True, help="download results info")
-          parser.add_argument("-c", "--synapseConfig", required=True, help="credentials fle")
+          parser.add_argument("-c", "--synapseConfig", required=True, help="credentials file")
           args = parser.parse_args()
           syn = synapseclient.Synapse(configPath=args.synapseConfig)
           syn.login()

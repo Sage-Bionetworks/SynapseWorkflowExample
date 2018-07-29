@@ -40,7 +40,7 @@ arguments:
     prefix: -e
   - valueFrom: results.json
     prefix: -r
-  - valueFrom: $(inputs.synapseConfig)
+  - valueFrom: $(inputs.synapseConfig.path)
     prefix: -c
 
 requirements:
@@ -61,7 +61,7 @@ requirements:
             parser.add_argument("-uv", "--usedEntityVersion", required=False, help="version of entity 'used' as input")
             parser.add_argument("-e", "--executedEntity", required=False, help="Syn ID of workflow which was executed")
             parser.add_argument("-r", "--results", required=True, help="Results of file upload")
-            parser.add_argument("-c", "--synapseConfig", required=True, help="credentials fle")
+            parser.add_argument("-c", "--synapseConfig", required=True, help="credentials file")
             args = parser.parse_args()
             syn = synapseclient.Synapse(configPath=args.synapseConfig)
             syn.login()

@@ -29,7 +29,7 @@ arguments:
     prefix: -v
   - valueFrom: $(inputs.private)
     prefix: -p
-  - valueFrom: $(inputs.synapseConfig)
+  - valueFrom: $(inputs.synapseConfig.path)
     prefix: -c
 
 requirements:
@@ -48,7 +48,7 @@ requirements:
             parser.add_argument("-n", "--annotationName", required=True, help="Name of annotation to add")
             parser.add_argument("-v", "--annotationValue", required=True, help="Value of annotation")
             parser.add_argument("-p", "--private", required=False, help="Annotation is private to queue administrator(s)")
-            parser.add_argument("-c", "--synapseConfig", required=True, help="credentials fle")
+            parser.add_argument("-c", "--synapseConfig", required=True, help="credentials file")
             args = parser.parse_args()
             syn = synapseclient.Synapse(configPath=args.synapseConfig)
             syn.login()
