@@ -58,7 +58,7 @@ requirements:
             parser.add_argument("-e", "--executedEntity", required=False, help="Syn ID of workflow which was executed")
             parser.add_argument("-r", "--results", required=True, help="Results of file upload")
             args = parser.parse_args()
-            syn = synapseclient.Synapse(configPath="/root/.synapseConfig")
+            syn = synapseclient.Synapse(configPath=".synapseConfig")
             syn.login()
             file=synapseclient.File(path=args.infile, parent=args.parentId)
             file = syn.store(file, used={'reference':{'targetId':args.usedEntityId, 'targetVersionNumber':args.usedEntityVersion}}, executed=args.executedEntity)

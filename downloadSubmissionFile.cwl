@@ -32,7 +32,7 @@ requirements:
           parser.add_argument("-s", "--submissionId", required=True, help="Submission ID")
           parser.add_argument("-r", "--results", required=True, help="download results info")
           args = parser.parse_args()
-          syn = synapseclient.Synapse(configPath="/root/.synapseConfig")
+          syn = synapseclient.Synapse(configPath=".synapseConfig")
           syn.login()
           sub = syn.getSubmission(args.submissionId, downloadLocation=".")
           if sub.entity.entityType!='org.sagebionetworks.repo.model.FileEntity':

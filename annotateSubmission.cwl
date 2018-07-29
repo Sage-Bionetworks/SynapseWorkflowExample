@@ -45,7 +45,7 @@ requirements:
             parser.add_argument("-v", "--annotationValue", required=True, help="Value of annotation")
             parser.add_argument("-p", "--private", required=False, help="Annotation is private to queue administrator(s)")
             args = parser.parse_args()
-            syn = synapseclient.Synapse(configPath="/root/.synapseConfig")
+            syn = synapseclient.Synapse(configPath=".synapseConfig")
             syn.login()
             status = syn.getSubmissionStatus(args.submissionId)
             annot = {'isPrivate': args.private, 'key': args.annotationName, 'value': args.annotationValue}
