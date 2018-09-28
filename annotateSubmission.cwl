@@ -42,18 +42,11 @@ requirements:
           import synapseclient
           import argparse
           import json
-          if __name__ == '__main__':
-            parser = argparse.ArgumentParser()
-            parser.add_argument("-s", "--submissionId", required=True, help="Submission ID")
-            parser.add_argument("-n", "--annotationName", required=True, help="Name of annotation to add")
-            parser.add_argument("-v", "--annotationValue", required=True, help="Value of annotation")
-            parser.add_argument("-p", "--private", required=False, help="Annotation is private to queue administrator(s)")
-            parser.add_argument("-c", "--synapseConfig", required=True, help="credentials file")
-            args = parser.parse_args()
-            syn = synapseclient.Synapse(configPath=args.synapseConfig)
-            syn.login()
-            status = syn.getSubmissionStatus(args.submissionId)
-            annot = {'isPrivate': args.private, 'key': args.annotationName, 'value': args.annotationValue}
+          from synapseclient.retry import _with_retry
+          
+          def annotate_submission(syn, submissionId, isPrivate, annotationName, annotationValue):
+            status = syn.getSubmissionStatus(submissionId)
+            annot = {'isPrivate': isPrivate, 'key': annotationName, 'value': annotationValue}
             if not 'annotations' in status:
               status.annotations = {}
             if 'stringAnnos' not in status.annotations:
@@ -67,6 +60,18 @@ requirements:
             if not foundIt:
               status.annotations['stringAnnos'].append(annot)
             status = syn.store(status)
+          
+          if __name__ == '__main__':
+            parser = argparse.ArgumentParser()
+            parser.add_argument("-s", "--submissionId", required=True, help="Submission ID")
+            parser.add_argument("-n", "--annotationName", required=True, help="Name of annotation to add")
+            parser.add_argument("-v", "--annotationValue", required=True, help="Value of annotation")
+            parser.add_argument("-p", "--private", required=False, help="Annotation is private to queue administrator(s)")
+            parser.add_argument("-c", "--synapseConfig", required=True, help="credentials file")
+            args = parser.parse_args()
+            syn = synapseclient.Synapse(configPath=args.synapseConfig)
+            syn.login()
+            _with_retry(lambda: annotate_submission(syn, args.submissionId, args.private, args.annotationName, args.annotationValue))
      
 outputs: []
 
