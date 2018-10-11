@@ -4,7 +4,7 @@
 #
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand: echo
+baseCommand: pwd
 inputs:
   message:
     type: string
