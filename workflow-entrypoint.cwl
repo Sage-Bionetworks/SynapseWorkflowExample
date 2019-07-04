@@ -10,7 +10,8 @@
 #
 cwlVersion: v1.0
 class: Workflow
-
+requirements:
+  - class: StepInputExpressionRequirement
 inputs:
   - id: submissionId
     type: int
