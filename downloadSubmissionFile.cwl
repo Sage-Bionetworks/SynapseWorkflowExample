@@ -43,6 +43,10 @@ requirements:
           if sub.entity.entityType!='org.sagebionetworks.repo.model.FileEntity':
             raise Exception('Expected FileEntity type but found '+sub.entity.entityType)
           os.rename(sub.filePath, "submission-"+args.submissionId)
+          print("Moved "+sub.filePath+" to "+"submission-"+args.submissionId)
+          print("Current directory: "+os.getcwd())
+          print("Current directory content:")
+          print("\n".join(os.listdir("."))) 
           result = {'entityId':sub.entity.id,'entityVersion':sub.entity.versionNumber}
           with open(args.results, 'w') as o:
             o.write(json.dumps(result))
